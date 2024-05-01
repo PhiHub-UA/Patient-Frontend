@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-slot": "^1.0.2",
@@ -28,7 +29,8 @@
     "react-router-dom": "^6.23.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "z": "^1.0.9"
+    "z": "^1.0.9",
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.31.2",
