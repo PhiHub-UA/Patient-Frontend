@@ -79,7 +79,6 @@ function LoginRegister() {
     },
     onSuccess: (res) => {
       localStorage.setItem("token", res.data.token);
-      //loginStore(res.data.username);
       setTimeout(() => {
         navigate({ to: "/" });
       }, 2000);
