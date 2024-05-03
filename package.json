@@ -22,7 +22,6 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
     "react": "^18.2.0",
-    "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
     "react-icons": "^5.1.0",
@@ -31,7 +30,8 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "z": "^1.0.1",
-    "zod": "^3.23.5"
+    "zod": "^3.23.5",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.31.2",
