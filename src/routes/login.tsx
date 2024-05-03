@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import axios from "@/api/axios";
+import { useNavigate } from "@tanstack/react-router";
 
 const registerSchema = z.object({
   username: z.string().min(2).max(50),
@@ -36,6 +37,8 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginRegister() {
+  const navigate = useNavigate({ from: "/login" });
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -76,7 +79,10 @@ function LoginRegister() {
     },
     onSuccess: (res) => {
       localStorage.setItem("token", res.data.token);
-      console.log(res);
+      //loginStore(res.data.username);
+      setTimeout(() => {
+        navigate({ to: "/" });
+      }, 2000);
     },
     onError: (err) => {
       console.error(err);
@@ -87,12 +93,11 @@ function LoginRegister() {
     mutationKey: ["register"],
     mutationFn: async (data: z.infer<typeof registerSchema>) => {
       try {
-        const res = await axios.post("/auth/register", data, {
+        await axios.post("/auth/register", data, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        console.log(res);
       } catch (err) {
         console.error(err);
       }
