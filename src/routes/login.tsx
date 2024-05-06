@@ -106,9 +106,9 @@ function LoginRegister() {
   return (
     <Tabs
       defaultValue="register"
-      className="w-[50rem] justify-center items-center"
+      className="w-[50rem] justify-center items-center "
     >
-      <TabsList>
+      <TabsList className="flex justify-center items-center">
         <TabsTrigger value="register">Register</TabsTrigger>
         <TabsTrigger value="login">Login</TabsTrigger>
       </TabsList>
@@ -229,8 +229,8 @@ function LoginRegister() {
             )}
           </form>
         </Form>
-      </TabsContent>
-      <TabsContent value="login">
+      </TabsContent >
+      <TabsContent value="login" className="flex justify-center items-center">
         <Form {...loginForm}>
           <form
             className="space-y-4 mb-2"

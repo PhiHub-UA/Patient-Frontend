@@ -2,17 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
 import { DataTable } from "@/components/ui/data-table";
-import React from "react";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/appointments")({
-  beforeLoad: () => {
-    console.log(
-      "I cannot call hooks here so how do i see if user is logged in from store ;/"
-    );
-  },
-
   component: AppointmentsPage,
 });
+
 
 function AppointmentsPage() {
   const { data: appointments } = useQuery({
@@ -39,18 +35,28 @@ function AppointmentsPage() {
           <DataTable
             columns={[
               {
-                header: "Date",
-                accessorFn : (row) => new Date(row.date).toLocaleString(),
+                id: 'dateColumn', // Add an id for the column
+                header: ({ column }) => {
+                  return (
+                    <Button
+                      variant="ghost"
+                      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                      Date
+                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  )
+                },
+                accessorFn: (row) => new Date(row.date),
+
               },
               {
                 header: "Price",
                 accessorFn : (row) => row.price +"€",
-
               },
               {
                 header: "Patient",
                 accessorKey: "patient.username",
-
               },
               {
                 header: "Medic",
@@ -68,32 +74,6 @@ function AppointmentsPage() {
         ) : (
           <div>No appointments available</div>
         )}
-
-        {/* {
-        "id": 1,
-        "date": 1714406400000,
-        "price": 50.0,
-        "patient": {
-            "id": 1,
-            "name": null,
-            "phone": "123456788",
-            "email": "rodrigoaguiar692@hotmail.com",
-            "age": 12,
-            "username": "dumbassdumbass",
-            "role": "user"
-        },
-        "medic": {
-            "id": 1,
-            "name": "fodasse",
-            "specialities": [
-                "CARDIOLOGY",
-                "DERMATOLOGY",
-                null
-            ]
-        },
-        "speciality": "DERMATOLOGY",
-        "bill": null
-    } */}
       </section>
     </div>
   );
