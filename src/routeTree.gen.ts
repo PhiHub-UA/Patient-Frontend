@@ -11,11 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MarkappointmentImport } from './routes/mark_appointment'
 import { Route as LoginImport } from './routes/login'
 import { Route as AppointmentsImport } from './routes/appointments'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const MarkappointmentRoute = MarkappointmentImport.update({
+  path: '/mark_appointment',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -48,6 +54,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/mark_appointment': {
+      preLoaderRoute: typeof MarkappointmentImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -57,6 +67,7 @@ export const routeTree = rootRoute.addChildren([
   IndexRoute,
   AppointmentsRoute,
   LoginRoute,
+  MarkappointmentRoute,
 ])
 
 /* prettier-ignore-end */
