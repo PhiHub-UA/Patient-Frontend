@@ -34,23 +34,31 @@ function AppointmentsPage() {
       <h1 className="text-2xl text-primary mb-5 items-center justify-center ">Appointments</h1>
       <section className="items-center flex flex-col gap-4 justify-center ">
         {appointments && appointments.length > 0 ? (
-
-
           <DataTable
             columns={[
               {
-                header: "Date",
-                accessorFn : (row) => new Date(row.date).toLocaleString(),
+                id: 'dateColumn', // Add an id for the column
+                header: ({ column }) => {
+                  return (
+                    <Button
+                      variant="ghost"
+                      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                      Date
+                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  )
+                },
+                accessorFn: (row) => new Date(row.date).toLocaleString(),
+                sortType: 'datetime',
               },
               {
                 header: "Price",
                 accessorFn : (row) => row.price +"€",
-
               },
               {
                 header: "Patient",
                 accessorKey: "patient.username",
-
               },
               {
                 header: "Medic",
@@ -68,32 +76,6 @@ function AppointmentsPage() {
         ) : (
           <div>No appointments available</div>
         )}
-
-        {/* {
-        "id": 1,
-        "date": 1714406400000,
-        "price": 50.0,
-        "patient": {
-            "id": 1,
-            "name": null,
-            "phone": "123456788",
-            "email": "rodrigoaguiar692@hotmail.com",
-            "age": 12,
-            "username": "dumbassdumbass",
-            "role": "user"
-        },
-        "medic": {
-            "id": 1,
-            "name": "fodasse",
-            "specialities": [
-                "CARDIOLOGY",
-                "DERMATOLOGY",
-                null
-            ]
-        },
-        "speciality": "DERMATOLOGY",
-        "bill": null
-    } */}
       </section>
     </div>
   );

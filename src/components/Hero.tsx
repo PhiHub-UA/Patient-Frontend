@@ -16,7 +16,9 @@ const Hero = () => {
           <p className='text-lg'> Here you can mark appointments or search for your old appointments.</p>
           {isLoggedIn && (
           <div className="flex flex-row gap-2 mt-5"> 
-          <Button variant="outline" className="border-2 border-primary" >Mark a new Appointment</Button>
+          <Link to="/mark_appointment">
+          <Button variant="outline" className="border-2 border-popover" >Mark a new Appointment</Button>
+          </Link>
           <Link to="/appointments">
           <Button variant ="outline" className="border-2 border-primary" >Check my old appointments</Button>
           </Link>
