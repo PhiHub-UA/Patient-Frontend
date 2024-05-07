@@ -1,15 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
+import { DataTable } from "@/components/ui/data-table";
+import React from "react";
 
 export const Route = createFileRoute("/appointments")({
   beforeLoad: () => {
@@ -22,32 +15,25 @@ export const Route = createFileRoute("/appointments")({
 });
 
 function AppointmentsPage() {
-
-    const {data:appointments} = useQuery({
-        queryKey: ["appointments"],
-        queryFn: () => {
-          axios.get("/appointments", 
-          {
-            headers: {
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : undefined,
-            },
-          }
-        ).then((res) => {
-            return res.data.appointments;
-          }).catch((err) => {
-            console.log(err);
-          });
-          return null;
-        }
-      });
+  const { data: appointments } = useQuery({
+    queryKey: ["appointments"],
+    queryFn: () =>
+      axios
+        .get("/appointments", {
+          headers: {
+            Authorization: localStorage.getItem("token")
+              ? `Bearer ${localStorage.getItem("token")}`
+              : undefined,
+          },
+        })
+        .then((res) => res.data),
+  });
 
   return (
     <div className=" h-screen ">
-      <h1 className="text-2xl text-primary mb-5 ">Appointments</h1>
+      <h1 className="text-2xl text-primary mb-5 items-center justify-center ">Appointments</h1>
       <section className="items-center flex flex-col gap-4 justify-center ">
         {appointments && appointments.length > 0 ? (
-
-
           <DataTable
             columns={[
               {
