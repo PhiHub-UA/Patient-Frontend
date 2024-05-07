@@ -45,30 +45,52 @@ function AppointmentsPage() {
     <div className=" h-screen ">
       <h1 className="text-2xl text-primary mb-5 ">Appointments</h1>
       <section className="items-center flex flex-col gap-4 justify-center ">
+        {appointments && appointments.length > 0 ? (
 
-    <Table>
-        <TableHeader>
-            <TableRow>
-                <TableHead>Invoice</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-            {appointments && appointments.map(() => (
-                <TableRow>
-                    <TableCell className="font-medium">INV001</TableCell>
-                    <TableCell>Paid</TableCell>
-                    <TableCell>Credit Card</TableCell>
-                    <TableCell className="text-right">$250.00</TableCell>
-                </TableRow>
-            ))}
-        </TableBody>
-    </Table>
-        
 
-        </section>
+          <DataTable
+            columns={[
+              {
+                id: 'dateColumn', // Add an id for the column
+                header: ({ column }) => {
+                  return (
+                    <Button
+                      variant="ghost"
+                      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                      Date
+                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  )
+                },
+                accessorFn: (row) => new Date(row.date).toLocaleString(),
+                sortType: 'datetime',
+              },
+              {
+                header: "Price",
+                accessorFn : (row) => row.price +"€",
+              },
+              {
+                header: "Patient",
+                accessorKey: "patient.username",
+              },
+              {
+                header: "Medic",
+                accessorKey: "medic.name",
+
+              },
+              {
+                header: "Speciality",
+                accessorKey: "speciality",
+
+              },
+            ]}
+            data={appointments}
+          />
+        ) : (
+          <div>No appointments available</div>
+        )}
+      </section>
     </div>
   );
 }
