@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
 import { DataTable } from "@/components/ui/data-table";
-import React from "react";
+import  {Button} from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const Route = createFileRoute("/appointments")({
   beforeLoad: () => {
@@ -50,7 +51,6 @@ function AppointmentsPage() {
                   )
                 },
                 accessorFn: (row) => new Date(row.date).toLocaleString(),
-                sortType: 'datetime',
               },
               {
                 header: "Price",
