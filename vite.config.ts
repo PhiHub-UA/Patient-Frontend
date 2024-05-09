@@ -5,12 +5,17 @@ import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite(),],
+  plugins: [react(
+  {
+    include: "**/*.tsx",
+  }
+), TanStackRouterVite()],
   server: {
     host:'0.0.0.0',
+    port : 5173,
     watch: {
       usePolling: true
-    }
+    },
   },
   resolve: {
     alias: {

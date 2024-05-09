@@ -2,7 +2,7 @@
 FROM node:20 AS build
 
 # Set working directory
-WORKDIR /Patient-Frontend
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
