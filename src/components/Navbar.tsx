@@ -5,8 +5,11 @@ import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
 import { UserIcon } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { useNavigate } from "@tanstack/react-router";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const login = useUserStore((state) => state.login) || false;
 
   const _ = useQuery({
@@ -57,9 +60,23 @@ const Navbar = () => {
               <span>
                 <Link to="/mark_appointment">Mark Appointment</Link>
               </span>
+
+              <Badge
+                variant={"outline"}
+                className="ml-3 font-bold border-2 border-ghost"
+              >
+                {user}
+              </Badge>
               <UserIcon className="h-6 w-6" />
-              <h6>{user}</h6>
-              <Button onClick={() => logout()}>Logout</Button>
+              <Button
+                onClick={() => {
+                  logout();
+                  navigate({ to: "/" });
+                }}
+                variant={"link"}
+              >
+                Logout
+              </Button>
             </>
           ) : (
             <Link to="/login">

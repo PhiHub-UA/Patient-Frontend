@@ -17,6 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Progress } from "@/components/ui/progress";
+
 import axios from "@/api/axios";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -25,6 +27,7 @@ export const Route = createFileRoute("/mark_appointment")({
 });
 
 function MarkAppointmentPage() {
+  const [progress, setProgress] = useState<number>(0);
   const [selectedSpeciality, setSelectedSpeciality] = useState<string>("");
   const [tab, setTab] = useState<string>("speciality");
   const [selectedDoctor, setSelectedDoctor] = useState<string>("");
@@ -122,9 +125,10 @@ function MarkAppointmentPage() {
       return res.data;
     },
     onSuccess: () => {
+      setProgress(100);
       setTimeout(() => {
         navigate({ to: "/appointments" });
-      }, 1000);
+      }, 3000);
     },
   });
 
@@ -137,13 +141,13 @@ function MarkAppointmentPage() {
         <CardContent>
           <Tabs value={tab} onValueChange={onTabChange}>
             <TabsList className="flex justify-evenly mb-8">
-              <TabsTrigger value="speciality" className="grow">
+              <TabsTrigger value="speciality" className="grow bg-secondary">
                 Speciality
               </TabsTrigger>
-              <TabsTrigger disabled={true} value="doctor" className="grow">
+              <TabsTrigger value="doctor" className="grow bg-secondary ">
                 Doctor
               </TabsTrigger>
-              <TabsTrigger disabled={true} value="date" className="grow">
+              <TabsTrigger value="date" className="grow bg-secondary">
                 Date
               </TabsTrigger>
             </TabsList>
@@ -154,7 +158,6 @@ function MarkAppointmentPage() {
               <Select
                 onValueChange={(value) => {
                   setSelectedSpeciality(value);
-                  console.log(value);
                 }}
                 value={selectedSpeciality}
               >
@@ -162,13 +165,13 @@ function MarkAppointmentPage() {
                   <SelectValue placeholder="Select a Speciality" />
                 </SelectTrigger>
                 <SelectContent defaultValue="Speciality">
-                  <SelectGroup className="capitalize">
+                  <SelectGroup>
                     {specialities &&
                       specialities.map((speciality: string) => (
                         <SelectItem
                           key={speciality}
                           value={speciality}
-                          className="capitalize"
+                          className="text-md"
                         >
                           {speciality}
                         </SelectItem>
@@ -178,9 +181,11 @@ function MarkAppointmentPage() {
               </Select>
 
               <Button
+                variant={"accent"}
                 className="mt-4"
                 onClick={() => {
                   onTabChange("doctor");
+                  setProgress(33);
                 }}
               >
                 Save and proceed to next step
@@ -191,7 +196,6 @@ function MarkAppointmentPage() {
               <Select
                 onValueChange={(value) => {
                   setSelectedDoctor(value);
-                  console.log(value);
                 }}
                 value={selectedDoctor}
               >
@@ -205,7 +209,11 @@ function MarkAppointmentPage() {
                         (
                           doctor // cba to make a Doctor type
                         ) => (
-                          <SelectItem key={doctor.id} value={doctor.id}>
+                          <SelectItem
+                            key={doctor.id}
+                            value={doctor.id}
+                            className="text-md"
+                          >
                             {doctor.name}
                           </SelectItem>
                         )
@@ -215,9 +223,11 @@ function MarkAppointmentPage() {
               </Select>
 
               <Button
+                variant={"accent"}
                 className="mt-4"
                 onClick={() => {
                   onTabChange("date");
+                  setProgress(50);
                 }}
               >
                 Save and proceed to next step
@@ -228,8 +238,11 @@ function MarkAppointmentPage() {
                 <Label className="text-2xl">Select the day</Label>
                 <Calendar
                   mode="single"
+                  onSelect={(date) => {
+                    setProgress(66);
+                    setDate(date);
+                  }}
                   selected={date}
-                  onSelect={setDate}
                   initialFocus
                 />
               </div>
@@ -241,6 +254,7 @@ function MarkAppointmentPage() {
                     <Select
                       onValueChange={(value) => {
                         setSelectedSlot(value);
+                        setProgress(83);
                       }}
                       value={selectedSlot}
                     >
@@ -267,6 +281,7 @@ function MarkAppointmentPage() {
                   selectedDoctor &&
                   selectedSpeciality && (
                     <Button
+                      variant={"accent"}
                       onClick={() => {
                         markAppointment.mutate();
                       }}
@@ -290,6 +305,7 @@ function MarkAppointmentPage() {
           </Tabs>
         </CardContent>
       </Card>
+      <Progress className="mt-4" value={progress} />
     </main>
   );
 }
