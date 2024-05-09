@@ -4,25 +4,28 @@ import { Link } from "@tanstack/react-router";
 import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
+import { UserIcon } from "lucide-react";
 
 const Navbar = () => {
-
   const login = useUserStore((state) => state.login) || false;
 
   const _ = useQuery({
     queryKey: ["user"],
     queryFn: () => {
-      axios.get("/users/me", 
-      {
-        headers: {
-          Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : undefined,
-        },
-      }
-    ).then((res) => {
-        login(res.data.username);
-      }).catch((err) => {
-        console.log(err);
-      });
+      axios
+        .get("/users/me", {
+          headers: {
+            Authorization: localStorage.getItem("token")
+              ? `Bearer ${localStorage.getItem("token")}`
+              : undefined,
+          },
+        })
+        .then((res) => {
+          login(res.data.username);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       return null;
     },
   });
@@ -31,33 +34,40 @@ const Navbar = () => {
   const logout = useUserStore((state: { logout: () => void }) => state.logout);
 
   return (
-    <nav className="sticky flex items-center  w-[90vw] p-4 m-4 rounded-xl shadow-xl text-primary bg-background">
-      <Link to="/">
+    <nav className="sticky flex items-center w-[90vw] p-4 m-4 rounded-xl shadow-xl text-primary bg-background">
+      <Link to="/" className="mr-8">
         <img src={logo_big} alt="logo" className="w-auto h-12" />
       </Link>
-      <ul className="flex ml-[27rem] gap-4 text-lg font-semibold">
-        <li>
+      <div className="flex flex-row gap-6 items-center text-lg font-semibold w-full">
+        <span>
           <Link to="/">Home</Link>
-        </li>
-        <li>
+        </span>
+        <span>
           <Link to="/about">About</Link>
-        </li>
-        <li>
+        </span>
+        <span>
           <Link to="/contact">Contact</Link>
-        </li>
-      </ul>
-      {user ? (
-        <>
-        <h6 className=" ml-[35rem] pr-[2rem]">{user}</h6>
-          <Button onClick={() => logout() }>
-            Logout
-          </Button>
-        </>
-      ) : (
-        <Link to="/login" className=" ml-[35rem] pr-[2rem]">
-          <Button>Login</Button>
-        </Link>
-      )}
+        </span>
+        <div className="items-center flex flex-row w-full gap-6 justify-end">
+          {user ? (
+            <>
+              <span>
+                <Link to="/appointments">My Appointments</Link>
+              </span>
+              <span>
+                <Link to="/mark_appointment">Mark Appointment</Link>
+              </span>
+              <UserIcon className="h-6 w-6" />
+              <h6>{user}</h6>
+              <Button onClick={() => logout()}>Logout</Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
+          )}
+        </div>
+      </div>
     </nav>
   );
 };

@@ -1,4 +1,3 @@
-
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -19,6 +18,7 @@ import {
 } from "@/components/ui/select";
 
 import axios from "@/api/axios";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/mark_appointment")({
   component: () => MarkAppointmentPage(),
@@ -30,6 +30,8 @@ function MarkAppointmentPage() {
   const [selectedDoctor, setSelectedDoctor] = useState<string>("");
   const [date, setDate] = React.useState<Date>();
   const [selectedSlot, setSelectedSlot] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const onTabChange = (value: string) => {
     setTab(value);
@@ -118,6 +120,11 @@ function MarkAppointmentPage() {
       );
       console.log(res.data);
       return res.data;
+    },
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate({ to: "/appointments" });
+      }, 1000);
     },
   });
 
