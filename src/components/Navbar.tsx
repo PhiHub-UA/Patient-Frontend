@@ -55,12 +55,11 @@ const Navbar = () => {
           {user ? (
             <>
               <span>
-                <Link to="/appointments">My Appointments</Link>
-              </span>
-              <span>
                 <Link to="/mark_appointment">Mark Appointment</Link>
               </span>
-
+              <span>
+                <Link to="/appointments">My Appointments</Link>
+              </span>
               <Badge
                 variant={"outline"}
                 className="ml-3 font-bold border-2 border-ghost"
