@@ -47,7 +47,7 @@ function MarkAppointmentPage() {
   } = useQuery({
     queryKey: ["specialities"],
     queryFn: async () => {
-      const res = await axios.get("/speciality", {
+      const res = await axios.get("/patient/speciality", {
         headers: {
           Authorization: localStorage.getItem("token")
             ? `Bearer ${localStorage.getItem("token")}`
@@ -65,7 +65,7 @@ function MarkAppointmentPage() {
   } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
-      const res = await axios.get(`/medic?speciality=${selectedSpeciality}`, {
+      const res = await axios.get(`/patient/medics?speciality=${selectedSpeciality}`, {
         headers: {
           Authorization: localStorage.getItem("token")
             ? `Bearer ${localStorage.getItem("token")}`
@@ -86,7 +86,7 @@ function MarkAppointmentPage() {
     queryKey: ["availableSlots"],
     queryFn: async () => {
       const res = await axios.get(
-        `/medic/availability/${selectedDoctor}?day=${date?.getTime()}`,
+        `/patient/medics/availability/${selectedDoctor}?day=${date?.getTime()}`,
         {
           headers: {
             Authorization: localStorage.getItem("token")
@@ -106,7 +106,7 @@ function MarkAppointmentPage() {
       date?.setMinutes(parseInt(selectedSlot.split(":")[1]));
 
       const res = await axios.post(
-        `/appointments`,
+        `/patient/appointments`,
         {
           medicID: selectedDoctor,
           speciality: selectedSpeciality,

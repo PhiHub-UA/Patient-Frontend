@@ -20,7 +20,7 @@ function AppointmentsPage() {
     queryKey: ["appointments"],
     queryFn: () =>
       axios
-        .get("/appointments", {
+        .get("/patient/appointments", {
           headers: {
             Authorization: localStorage.getItem("token")
               ? `Bearer ${localStorage.getItem("token")}`
