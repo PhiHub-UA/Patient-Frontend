@@ -16,7 +16,7 @@ const Navbar = () => {
     queryKey: ["user"],
     queryFn: () => {
       axios
-        .get("/users/me", {
+        .get("/patient/users/me", {
           headers: {
             Authorization: localStorage.getItem("token")
               ? `Bearer ${localStorage.getItem("token")}`
