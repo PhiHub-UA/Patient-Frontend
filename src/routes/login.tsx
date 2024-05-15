@@ -70,7 +70,7 @@ function LoginRegister() {
   const login = useMutation({
     mutationKey: ["login"],
     mutationFn: async (data: z.infer<typeof loginSchema>) => {
-      const res = await axios.post("/patient/auth/login", data, {
+      const res = await axios.post("/auth/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
