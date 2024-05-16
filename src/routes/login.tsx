@@ -21,6 +21,7 @@ import { useNavigate } from "@tanstack/react-router";
 const registerSchema = z.object({
   username: z.string().min(2).max(50),
   password: z.string().min(8).max(50),
+  name: z.string().min(2).max(50),
   phone: z.number(),
   email: z.string().email(),
   age: z.number().min(1).max(120),
@@ -37,12 +38,14 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginRegister() {
+
   const navigate = useNavigate({ from: "/login" });
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
+      name: "",
       password: "",
       phone: 0,
       email: "",
@@ -121,6 +124,24 @@ function LoginRegister() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 mb-2"
           >
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="name" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Insert your name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
             <FormField
               control={form.control}
               name="username"
