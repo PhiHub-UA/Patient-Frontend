@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "@/api/axios";
 import React from "react";
 
@@ -12,7 +12,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 
 
@@ -28,6 +27,8 @@ export const Route = createFileRoute("/appointments")({
 
 function AppointmentsPage() {
 
+  const queryClient = useQueryClient();
+
   const [showDialog, setShowDialog] = React.useState(false);
 
   const { data: appointments } = useQuery({
@@ -41,7 +42,8 @@ function AppointmentsPage() {
               : undefined,
           },
         })
-        .then((res) => res.data),
+        .then((res) => {console.log(res.data); return res.data}),
+
   });
 
 
@@ -58,8 +60,26 @@ function AppointmentsPage() {
         })
         .then((res) => res.data),
     onSuccess: () => {
-      console.log("Success");
+      queryClient.invalidateQueries(["appointments"]);
       setShowDialog(true);
+
+    }
+  });
+
+  const deleteTicket = useMutation({
+    mutationKey: ["deleteTicket"],
+    mutationFn: (appointmentID : number) =>
+      axios
+        .delete(`/patient/appointments/${appointmentID}`, {
+          headers: {
+            Authorization: localStorage.getItem("token")
+              ? `Bearer ${localStorage.getItem("token")}`
+              : undefined,
+          },
+        })
+        .then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["appointments"]);
     }
   });
 
@@ -99,12 +119,12 @@ function AppointmentsPage() {
                     <Button
                       variant="destructive"
                       className="text-md"
-                      onClick={() => console.log("Cancel", appointment)}
+                      onClick={() => deleteTicket.mutate( appointment.id )}
                     >
                       Cancel
                     </Button>
                   </td>
-                  {appointment && new Date().getTime() - 60*1000*200 < new Date(appointment.date).getTime() ? (
+                  {appointment && new Date().getTime() - 60*1000*200 < new Date(appointment.date).getTime() && appointment.state=="PENDING" && (
                     <td>
                       <Button
                         className="btn btn-sm btn-primary"
@@ -113,10 +133,9 @@ function AppointmentsPage() {
                         Check In
                       </Button>
                     </td>
-                  ) : (
-                    <td>Not available</td>
-                  )
-                    }
+                  )} 
+                  {appointment.state=="CHECKED_IN" && <td><Button variant="ghost" disabled={true}> Already Checked In </Button></td>}
+                  {appointment.state=="FINISHED" && <td><Button variant="ghost" disabled={true}></Button></td>}
                 </tr>
               ))}
             </tbody>
