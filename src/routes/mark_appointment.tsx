@@ -1,8 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, React } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
 
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
@@ -20,7 +19,6 @@ import {
 import { Progress } from "@/components/ui/progress";
 
 import axios from "@/api/axios";
-import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/mark_appointment")({
   component: () => MarkAppointmentPage(),
@@ -41,9 +39,7 @@ function MarkAppointmentPage() {
   };
 
   const {
-    data: specialities,
-    isLoading,
-    error,
+    data: specialities
   } = useQuery({
     queryKey: ["specialities"],
     queryFn: async () => {
@@ -59,9 +55,7 @@ function MarkAppointmentPage() {
   });
 
   const {
-    data: doctors,
-    isLoading: doctorsIsLoading,
-    error: doctorsError,
+    data: doctors
   } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -80,8 +74,6 @@ function MarkAppointmentPage() {
 
   const {
     data: availableSlots,
-    isLoading: availableSlotsIsLoading,
-    error: availableSlotsError,
   } = useQuery({
     queryKey: ["availableSlots"],
     queryFn: async () => {
@@ -166,8 +158,8 @@ function MarkAppointmentPage() {
                 </SelectTrigger>
                 <SelectContent defaultValue="Speciality">
                   <SelectGroup>
-                    {specialities &&
-                      specialities.map((speciality: string) => (
+                    {
+                      specialities?.map((speciality: string) => (
                         <SelectItem
                           key={speciality}
                           value={speciality}
@@ -204,8 +196,8 @@ function MarkAppointmentPage() {
                 </SelectTrigger>
                 <SelectContent defaultValue="Doctor">
                   <SelectGroup>
-                    {doctors &&
-                      doctors.map(
+                    {
+                      doctors?.map(
                         (
                           doctor // cba to make a Doctor type
                         ) => (

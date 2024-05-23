@@ -1,12 +1,11 @@
 import { logo_big } from "@/assets";
 import { Button } from "./ui/button";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useUserStore } from "@/stores/userStore";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/api/axios";
 import { UserIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { useNavigate } from "@tanstack/react-router";
 
 const Navbar = () => {
   const navigate = useNavigate();
