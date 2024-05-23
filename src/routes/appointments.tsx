@@ -115,7 +115,7 @@ function AppointmentsPage() {
                   <td>{appointment.medic.name}</td>
                   <td>{appointment.speciality}</td>
                   <td>{appointment.status}</td>
-                  <td>
+                  <td> 
                     <Button
                       variant="destructive"
                       className="text-md"
