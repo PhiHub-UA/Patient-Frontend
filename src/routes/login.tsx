@@ -113,7 +113,7 @@ function LoginRegister() {
     >
       <TabsList>
         <TabsTrigger value="register">Register</TabsTrigger>
-        <TabsTrigger value="login">Login</TabsTrigger>
+        <TabsTrigger value="login"  id="loginTab">Login</TabsTrigger>
       </TabsList>
       <TabsContent
         value="register"
@@ -239,14 +239,14 @@ function LoginRegister() {
               )}
             />
 
-            <Button type="submit" className="pb-2">
+            <Button type="submit" className="pb-2" id="registerBtn">
               Register
             </Button>
             {register.isError && (
               <p className="text-warning text-xl">Invalid credentials</p>
             )}
             {register.isSuccess && (
-              <p className="text-success text-xl">Successfully registered</p>
+              <p className="text-success text-xl" id="successTextRegister">Successfully registered</p>
             )}
           </form>
         </Form>
@@ -285,17 +285,17 @@ function LoginRegister() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="pb-2">
+            <Button type="submit" className="pb-2" id="loginBtn">
               Login
             </Button>
+            {login.isError && (
+              <p className="text-warning text-xl">Invalid credentials</p>
+            )}
+            {login.isSuccess && (
+              <p className="text-success text-xl" id="successTextLogin">Successfully logged in</p>
+            )}
           </form>
         </Form>
-        {login.isError && (
-          <p className="text-warning text-xl">Invalid credentials</p>
-        )}
-        {login.isSuccess && (
-          <p className="text-success text-xl">Succesfully logged in</p>
-        )}
       </TabsContent>
     </Tabs>
   );

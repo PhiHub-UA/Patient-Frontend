@@ -63,6 +63,7 @@ const Navbar = () => {
               <Badge
                 variant={"outline"}
                 className="ml-3 font-bold border-2 border-ghost"
+                id="username"
               >
                 {user}
               </Badge>
@@ -78,7 +79,7 @@ const Navbar = () => {
               </Button>
             </>
           ) : (
-            <Link to="/login">
+            <Link to="/login" id="loginBtnNav">
               <Button>Login</Button>
             </Link>
           )}
