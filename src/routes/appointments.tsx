@@ -111,7 +111,7 @@ function AppointmentsPage() {
                 <tr key={appointment.id}>
                   <td>{new Date(appointment.date).toLocaleString()}</td>
                   <td>{appointment.price}€</td>
-                  <td>{appointment.patient.username}</td>
+                  <td id="uname">{appointment.patient.username}</td>
                   <td>{appointment.medic.name}</td>
                   <td>{appointment.speciality}</td>
                   <td>{appointment.status}</td>

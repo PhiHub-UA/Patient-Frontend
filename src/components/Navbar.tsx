@@ -54,10 +54,10 @@ const Navbar = () => {
           {user ? (
             <>
               <span>
-                <Link to="/mark_appointment">Mark Appointment</Link>
+                <Link id="markNavBtn" to="/mark_appointment">Mark Appointment</Link>
               </span>
               <span>
-                <Link to="/appointments">My Appointments</Link>
+                <Link id="appointmentsNavBtn" to="/appointments">My Appointments</Link>
               </span>
               <Badge
                 variant={"outline"}

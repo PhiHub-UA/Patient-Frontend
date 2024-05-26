@@ -153,7 +153,7 @@ function MarkAppointmentPage() {
                 }}
                 value={selectedSpeciality}
               >
-                <SelectTrigger>
+                <SelectTrigger id="selectSpeciality">
                   <SelectValue placeholder="Select a Speciality" />
                 </SelectTrigger>
                 <SelectContent defaultValue="Speciality">
@@ -161,6 +161,7 @@ function MarkAppointmentPage() {
                     {
                       specialities?.map((speciality: string) => (
                         <SelectItem
+                          id={speciality}
                           key={speciality}
                           value={speciality}
                           className="text-md"
@@ -179,6 +180,7 @@ function MarkAppointmentPage() {
                   onTabChange("doctor");
                   setProgress(33);
                 }}
+                id="goToStep2Btn"
               >
                 Save and proceed to next step
               </Button>
@@ -191,7 +193,7 @@ function MarkAppointmentPage() {
                 }}
                 value={selectedDoctor}
               >
-                <SelectTrigger>
+                <SelectTrigger id="selectDoctor">
                   <SelectValue placeholder="Select a Doctor" />
                 </SelectTrigger>
                 <SelectContent defaultValue="Doctor">
@@ -202,6 +204,7 @@ function MarkAppointmentPage() {
                           doctor // cba to make a Doctor type
                         ) => (
                           <SelectItem
+                            id={doctor.id}
                             key={doctor.id}
                             value={doctor.id}
                             className="text-md"
@@ -221,6 +224,7 @@ function MarkAppointmentPage() {
                   onTabChange("date");
                   setProgress(50);
                 }}
+                id="goToStep3Btn"
               >
                 Save and proceed to next step
               </Button>
@@ -250,13 +254,13 @@ function MarkAppointmentPage() {
                       }}
                       value={selectedSlot}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger id="selectHour">
                         <SelectValue placeholder="Select a Time Slot" />
                       </SelectTrigger>
                       <SelectContent defaultValue="Time Slot">
                         <SelectGroup>
                           {availableSlots.map((slot: string) => (
-                            <SelectItem key={slot} value={slot}>
+                            <SelectItem key={slot} value={slot} id={slot}>
                               {slot}
                             </SelectItem>
                           ))}
@@ -277,13 +281,14 @@ function MarkAppointmentPage() {
                       onClick={() => {
                         markAppointment.mutate();
                       }}
+                      id="markButton"
                     >
                       Confirm Appointment
                     </Button>
                   )}
 
                 {markAppointment.isSuccess && (
-                  <Label className="text-green-500">
+                  <Label className="text-green-500" id="confirmationText">
                     Appointment marked successfully
                   </Label>
                 )}
