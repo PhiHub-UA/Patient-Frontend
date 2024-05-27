@@ -68,6 +68,22 @@ function AppointmentsPage() {
     },
   });
 
+  const payBill = useMutation({
+    mutationFn: async (appointmentID) => {
+      const res = await axios.put(`/patient/appointments/${appointmentID}/pay`, {}, {
+        headers: {
+          Authorization: localStorage.getItem("token")
+            ? `Bearer ${localStorage.getItem("token")}`
+            : undefined,
+        },
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("appointments");
+    },
+  });
+
   const deleteTicket = useMutation({
     mutationKey: ["deleteTicket"],
     mutationFn: (appointmentID: number) =>
@@ -84,6 +100,8 @@ function AppointmentsPage() {
       queryClient.invalidateQueries(["appointments"]);
     },
   });
+
+
 
   return (
     <div className=" h-screen ">
@@ -142,8 +160,10 @@ function AppointmentsPage() {
                   )}
                   {appointment.state == "BILL_ISSUED" && (
                     <td>
-                      <Button variant="ghost" >
-                        Pay Bill
+                      <Button variant="ghost" 
+                      onClick={() => payBill.mutate(appointment.id)}
+                       >
+                        Pay Bill ${appointment.price}
                       </Button>
                     </td>
                   )}
