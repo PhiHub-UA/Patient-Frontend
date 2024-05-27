@@ -238,6 +238,7 @@ function MarkAppointmentPage() {
                     setProgress(66);
                     setDate(date);
                   }}
+                  fromDate={new Date()}
                   selected={date}
                   initialFocus
                 />
