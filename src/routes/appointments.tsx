@@ -69,19 +69,18 @@ function AppointmentsPage() {
   });
 
   const payBill = useMutation({
-    mutationKey: ["payBill"],
-    mutationFn: (appointmentID: number) =>
-      axios
-        .put(`/patient/appointments/${appointmentID}/pay`, {
-          headers: {
-            Authorization: localStorage.getItem("token")
-              ? `Bearer ${localStorage.getItem("token")}`
-              : undefined,
-          },
-        })
-        .then((res) => res.data),
+    mutationFn: async (appointmentID) => {
+      const res = await axios.put(`/patient/appointments/${appointmentID}/pay`, {}, {
+        headers: {
+          Authorization: localStorage.getItem("token")
+            ? `Bearer ${localStorage.getItem("token")}`
+            : undefined,
+        },
+      });
+      return res.data;
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries(["appointments"]);
+      queryClient.invalidateQueries("appointments");
     },
   });
 
@@ -164,7 +163,7 @@ function AppointmentsPage() {
                       <Button variant="ghost" 
                       onClick={() => payBill.mutate(appointment.id)}
                        >
-                        Pay Bill
+                        Pay Bill ${appointment.price}
                       </Button>
                     </td>
                   )}
