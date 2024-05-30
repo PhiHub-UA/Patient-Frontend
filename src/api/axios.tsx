@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://phihub-backend:8080"
+  baseURL: "http://deti-tqs-18.ua.pt:8080/"
 });
