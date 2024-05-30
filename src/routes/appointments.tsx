@@ -170,10 +170,11 @@ function AppointmentsPage() {
                   {appointment.state == "BILL_PAID" && (
                     <td>
                       <Button variant="ghost" disabled={true}>
-                        Bill Paid
+                        Bill Paid {appointment.price + "€"}
                       </Button>
                     </td>
                   )}
+                  {appointment.state == "PENDING" ? ( 
                   <td>
                     <Button
                       variant="destructive"
@@ -183,6 +184,10 @@ function AppointmentsPage() {
                       Cancel
                     </Button>
                   </td>
+                  ):
+                  <td>
+                    Not possible
+                    </td>}
                 </tr>
               ))}
             </tbody>
